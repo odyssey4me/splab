@@ -11,6 +11,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: Include distro-specific vars
+  include_vars: "{{ ansible_os_family | lower }}.yml"
+  tags:
+    - always
+
+- name: Install required packages
+  package:
+    name: "{{ item }}"
+    state: "present"
+    update_cache: "{{ (ansible_pkg_mgr == 'apt') | ternary('yes', omit) }}"
+  with_items: "{{ splunk_required_distro_packages }}"
+  become: yes
+
+- name: Set sysfs settings
+  command: "echo {{ item.setting }} > /sys/{{ item.name }}"
+  with_items: "{{ splunk_sysfs_settings }}"
+  become: yes
+
+- name: Configure sysfs settings at boot
+  lineinfile:
+    line: "{{ item.name }} = {{ item.setting }}"
+    dest: "/etc/sysfs.conf"
+    state: "present"
+  with_items: "{{ splunk_sysfs_settings }}"
+  become: yes
+
 - name: Create the Splunk group
   group:
     name: "{{ splunk_group_name }}"
