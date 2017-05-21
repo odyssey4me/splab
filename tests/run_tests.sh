@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Set dpkg to do non-interactive installs
+export DEBIAN_FRONTEND=noninteractive
+
 # Install Ansible
 sudo apt-get update
 sudo apt-get install -y ansible
