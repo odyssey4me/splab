@@ -10,6 +10,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Function to determine the default VirtualBox
+# default machine folder.
+def read_default_machine_folder
+  IO.popen(["VBoxManage", "list", "systemproperties"]) do |pipe|
+    pipe.each do |line|
+      if line =~ /^Default machine folder:\s+(.+?)$/i
+        return $1.to_s
+      end
+    end
+  end
+  nil
+end
+
 # To ensure a consistent test, ensure that we set
 # a minimal Vagrant version.
 Vagrant.require_version ">= 1.7.0"
@@ -24,8 +37,10 @@ Vagrant.configure(2) do |config|
       v.memory = 2048
       v.cpus = 2
 
-      image_path = "#{ENV["HOME"]}/VirtualBox VMs/#{v.name}"
-      image_name = 'ubuntu-xenial-16.04-cloudimg'
+      default_vm_path = read_default_machine_folder
+
+      image_path = "#{default_vm_path}/#{v.name}"
+      image_name = "ubuntu-xenial-16.04-cloudimg"
 
       # We clone the image to a resizable format
       v.customize [
