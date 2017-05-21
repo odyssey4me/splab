@@ -19,6 +19,7 @@ Thumbs.db
 # Ansible test artifacts
 *.retry
 
-# Splunk binaries
-files/binaries
-files/applications
+# Binaries
+*.deb
+*.rpm
+*.tgz
