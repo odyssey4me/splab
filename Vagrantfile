@@ -29,7 +29,9 @@ Vagrant.require_version ">= 1.7.0"
 
 Vagrant.configure(2) do |config|
 
-  config.vm.network "forwarded_port", guest: 8000, host: 8000
+  config.vm.network "forwarded_port", guest: 8000, host: 8000, protocol: "tcp"
+  config.vm.network "forwarded_port", guest: 9997, host: 9997, protocol: "tcp"
+  config.vm.network "forwarded_port", guest: 514, host: 514, protocol: "udp"
 
   config.vm.define "ubuntu1604" do |xenial|
     xenial.vm.box = "ubuntu/xenial64"
