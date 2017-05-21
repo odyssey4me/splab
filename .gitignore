@@ -1,0 +1,24 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# User driven backup files
+*.bak
+*.swp
+
+# Vagrant artifacts
+.vagrant
+*.log
+
+# Ansible test artifacts
+*.retry
+
+# Splunk binaries
+files/binaries
+files/applications
