@@ -24,7 +24,7 @@
     state: "present"
     comment: "Splunk System User"
     createhome: "yes"
-    shell: "/sbin/nologin"
+    shell: "/bin/bash"
     system: "yes"
   become: yes
 
