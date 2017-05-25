@@ -65,6 +65,19 @@
     - "binaries/splunk-*-*-Linux-x86_64.tgz"
   become: yes
 
+- name: Install the Splunk generic input application  
+  unarchive:
+    src: "{{ item }}"
+    dest: "/opt/splunk/etc/apps/"
+    creates: "/opt/splunk/etc/apps/splab_all_inputs"
+    owner: "{{ splunk_user_name }}"
+    group: "{{ splunk_group_name }}"
+  with_fileglob:
+    - "applications/splab_all_inputs.tar.gz"
+  become: yes
+
+
+
 - name: Enable Splunk to start at boot
   command: "/opt/splunk/bin/splunk enable boot-start -user splunk --accept-license"
   become: yes
