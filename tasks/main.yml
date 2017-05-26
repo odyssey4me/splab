@@ -69,14 +69,12 @@
   unarchive:
     src: "{{ item }}"
     dest: "/opt/splunk/etc/apps/"
-    creates: "/opt/splunk/etc/apps/splab_all_inputs"
+    creates: "/opt/splunk/etc/apps/splab_splunk_inputs"
     owner: "{{ splunk_user_name }}"
     group: "{{ splunk_group_name }}"
   with_fileglob:
-    - "applications/splab_all_inputs.tar.gz"
+    - "applications/splab_splunk_inputs.tar.gz"
   become: yes
-
-
 
 - name: Enable Splunk to start at boot
   command: "/opt/splunk/bin/splunk enable boot-start -user splunk --accept-license"
